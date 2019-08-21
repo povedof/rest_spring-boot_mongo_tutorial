@@ -1,0 +1,23 @@
+version: '3.3' # specify docker-compose version
+
+services:
+      
+  testdb:
+    image: mongo
+    container_name: mongo2
+#    ports:  # for demo/debug purpose only
+#      - 27018:27017
+    volumes:
+      - $HOME/data/springboot-mongo-data:/data/db
+      - $HOME/data/springboot-mongo-bkp:/data/bkp
+    restart: always
+
+  demo:
+   container_name: spring-boot_mongo_rest_api
+   image: povedof/spring-boot_mongo_rest_api
+   ports:
+     - "8084:8080"
+   depends_on:
+     - testdb
+  
+    
