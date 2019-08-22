@@ -1,0 +1,43 @@
+Mongo running in docker
+
+docker start my-mongo
+docker exec -it my-mongo bash
+mongo
+show dbs
+use my-db
+show collections
+db.mycollection.find()
+db.mycollection.find().pretty()
+db.mycollection.find({"title":"MongoDB Overview"}).pretty()
+db.mycollection.find({$or: [{"likes":100}, {"likes":20}]}).pretty()
+db.mycollection.find({$and: [{"likes":20}, {"by":"tutorials point"}]}).pretty()
+db.mycollection.find({$and: [{"likes":{$gt:10}}, {"by":"tutorials point"}]}).pretty()
+db.mycollection.update({"title":"Updated Title"}, {$set: {"title":"Updated Title2"}})
+db.mycollection.remove({"title":"Updated Title2"})
+db.mycollection.save({
+                      "_id" : ObjectId("5d5d640ceca591cc7ccc2d00"),
+                      "title" : "Updated Title2",
+                      "description" : "NoSQL database doesn't have tables",
+                      "by" : "tutorials point",
+                      "url" : "http://www.tutorialspoint.com",
+                      "tags" : [
+                      "mongodb",
+                      "database",
+                      "NoSQL"
+                      ],
+                      "likes" : 20,
+                      "comments" : [
+                      {
+                      "user" : "user1",
+                      "message" : "My first comment",
+                      "dateCreated" : ISODate("2013-12-10T02:35:00Z"),
+                      "like" : 0
+                      }
+                      ]
+                      })
+db.mycollection.find({}, {"title":1, _id:0})
+db.mycollection.find().limit(1).pretty()
+db.mycollection.find().limit(1).skip(1).pretty()
+db.mycollection.find({}, {"title":1, _id:0}).sort({"title":-1})
+db.mycollection.find({}, {"title":1, _id:0}).sort({"title":1})
+db.mycollection.aggregate([{$group:{_id:"$by_user", num_tutorial:{$sum:1}}}])
